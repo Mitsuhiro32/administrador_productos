@@ -41,4 +41,18 @@ module.exports = {
             .then((producto) => res.json(producto))
             .catch((err) => res.json(err));
     },
+
+    // Actualizar un producto por ID
+    updateProduct: (req, res) => {
+        Producto.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true })
+            .then((producto) => res.json(producto))
+            .catch((err) => res.json(err));
+    },
+
+    // Borrar un producto por ID
+    deleteProduct: (req, res) => {
+        Producto.deleteOne({ _id: req.params.id })
+            .then((producto) => res.json(producto))
+            .catch((err) => res.json(err));
+    }
 };
