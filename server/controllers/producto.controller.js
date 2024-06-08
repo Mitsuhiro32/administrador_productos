@@ -34,4 +34,11 @@ module.exports = {
             .then((productos) => res.json(productos))
             .catch((err) => res.json(err));
     },
+
+    // Obtener un producto por ID
+    getOneProduct: (req, res) => {
+        Producto.findOne({ _id: req.params.id })
+            .then((producto) => res.json(producto))
+            .catch((err) => res.json(err));
+    },
 };
