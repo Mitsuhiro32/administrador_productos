@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import ButtonDelete from "../ButtonDelete";
 
-const ProductDetail = ({URL_BASE, eliminarProducto}) => {
+const ProductDetail = ({URL_BASE}) => {
     const { id } = useParams();
-    const navigate = useNavigate();
     const [producto, setProducto] = useState({});
 
     useEffect(() => {
@@ -28,10 +28,7 @@ const ProductDetail = ({URL_BASE, eliminarProducto}) => {
             <div className="link">
                 <Link to="/">Volver</Link>
                 <Link to={`/productos/editar/${id}`}>Editar</Link>
-                <button onClick={() => {
-                    eliminarProducto(id)
-                    navigate('/');
-                }}>Eliminar</button>
+                <ButtonDelete id={id} URL_BASE={URL_BASE} />
             </div>
         </div>
     );

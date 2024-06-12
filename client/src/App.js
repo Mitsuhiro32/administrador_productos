@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import FormProduct from './components/FormProduct';
+import CreateProduct from './components/CreateProduct';
 import axios from 'axios';
 import ProductList from './components/ProductList';
 import { Route, Routes } from 'react-router-dom';
@@ -19,41 +19,25 @@ function App() {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [listaProductos]);
 
   const agregarProducto = (nuevoProducto) => {
     setListaProductos([...listaProductos, nuevoProducto]);
-  }
-
-  const eliminarProducto = (productId) => {
-    const confirmar = window.confirm('¿Estás seguro de eliminar este producto?');
-    const URL = `${URL_BASE}/productos/eliminar/${productId}`;
-
-    if (confirmar) {
-      axios.delete(URL)
-        .then((response) => {
-          console.log(response.data);
-          window.location.reload();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
   }
 
   return (
     <Routes>
       <Route path='/' element={
         <div className="App">
-          <FormProduct agregarProducto={agregarProducto} URL_BASE={URL_BASE} />
+          <CreateProduct agregarProducto={agregarProducto} URL_BASE={URL_BASE} />
           <hr />
           <h2>Lista de Productos</h2>
           {listaProductos.map((producto, idx) => {
-            return <ProductList key={idx} titulo={producto.titulo} id={producto._id} eliminarProducto={eliminarProducto} />
+            return <ProductList key={idx} titulo={producto.titulo} id={producto._id} URL_BASE={URL_BASE} />
           })}
         </div>
       } />
-      <Route path="/productos/:id" element={<ProductDetail URL_BASE={URL_BASE} eliminarProducto={eliminarProducto} />} />
+      <Route path="/productos/:id" element={<ProductDetail URL_BASE={URL_BASE} />} />
       <Route path="/productos/editar/:id" element={<UpdateProduct URL_BASE={URL_BASE} />} />
     </Routes>
   );

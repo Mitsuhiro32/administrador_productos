@@ -6,15 +6,11 @@ module.exports = {
         const { titulo, precio, descripcion } = req.body;
 
         if (!titulo || !precio || !descripcion) {
-            return res.json({ message: "Todos los campos son requeridos" });
-        } else if (!titulo || titulo === "") {
-            return res.json({ message: "El titulo es requerido" });
-        } else if (!precio || precio === "") {
-            return res.json({ message: "El precio es requerido" });
-        } else if (!descripcion || descripcion === "") {
-            return res.json({ message: "La descripción es requerida" });
+            res.statusMessage = "Todos los campos son requeridos";
+            return res.status(400).send(res.statusMessage);
         } else if (precio < 0) {
-            return res.json({ message: "El precio no puede ser negativo" });
+            res.statusMessage = "El precio no puede ser negativo";
+            return res.status(400).send(res.statusMessage);
         }
         
         const productoNuevo = {
